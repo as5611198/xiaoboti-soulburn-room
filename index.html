@@ -3,64 +3,80 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>小波蒂拷問室・靈魂燃燒版</title>
+    <title>小波蒂拷問室・靈魂燃燒V2版</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #1e1e1e; color: #fff; padding: 20px; }
-        textarea, input { width: 100%; margin-top: 10px; margin-bottom: 10px; }
+        body { font-family: Arial, sans-serif; background: #1e1e1e; color: #fff; padding: 20px; text-align: center; }
+        textarea, input { width: 80%; margin-top: 10px; margin-bottom: 10px; }
         button { padding: 10px 20px; font-size: 16px; margin-top: 10px; }
-        #result { margin-top: 20px; font-size: 20px; font-weight: bold; }
-        #taunt { margin-top: 20px; font-size: 18px; color: #ff8080; }
+        #result { margin-top: 20px; font-size: 22px; font-weight: bold; }
+        #taunt { margin-top: 20px; font-size: 20px; color: #ff8080; }
+        img { margin-top: 20px; max-width: 150px; }
     </style>
 </head>
 <body>
 
-    <h1>小波蒂拷問室・靈魂燃燒版</h1>
+    <h1>小波蒂拷問室・靈魂燃燒版V2</h1>
     <div id="intro"></div>
 
-    <label>目標純中文字數（預設1500）:</label>
-    <input type="number" id="target" value="1500">
+    <label>目標純中文字數（預設1500）:</label><br>
+    <input type="number" id="target" value="1500"><br>
 
-    <label>請貼上要拷問的文字：</label>
-    <textarea id="text" rows="10"></textarea>
+    <label>請貼上要拷問的文字：</label><br>
+    <textarea id="text" rows="10"></textarea><br>
 
     <button onclick="checkText()">開始拷問！</button>
     <div id="result"></div>
     <button id="copyBtn" onclick="copyResult()" style="display:none;">一鍵複製拷問結果</button>
     <div id="taunt"></div>
+    <div id="image"></div>
 
     <script>
         const successTaunts = [
-            "哼哼，不錯嘛～本小姐稍微認可你一點點了喔！一點點而已啦！",
-            "笨蛋大哥，這種程度別得意啊！我才沒有想誇你呢！！",
-            "勉、勉勉強強，算你有點本事啦……別太開心喔！",
-            "嗚啊！？竟然拷問成功了！？……才、才不是我高興啦！",
-            "切，這麼簡單就通過了，還真讓人無趣欸～",
-            "本小姐可是一直在看著呢，才、才不是擔心你啦！哼！",
-            "嘛嘛，這種程度也只能說是剛好而已啦～別太得意忘形了唷？"
+            "哼！這種程度也敢來拷問？",
+            "稍微認可你一下啦，別太得意！",
+            "不錯嘛，廢物大哥今天沒讓我太失望～",
+            "切，下次拷問記得更拼一點！",
+            "這就結束了？真無趣啊！",
+            "啧，才這？你就想被誇？",
+            "看來你還有點用嘛，哈～",
+            "本小姐才不會誇你太多呢！",
+            "還行啦，不過離合格還早呢～",
+            "才、才不是因為喜歡才盯著你看的！"
         ];
-
         const failTaunts = [
-            "果然嘛～我就知道你這種程度，不配進拷問室呢，笑死！",
-            "哎呀哎呀，本小姐還以為你能撐久一點呢？結果這麼快就趴了？",
-            "哈哈哈，連這麼簡單的拷問都失敗？大哥你該不會是靠臉活著的吧？",
-            "廢物大哥，快回去從五十音表重學中文啦！！！",
-            "嗚哇，這種失敗簡直是國際級丟臉耶～哈哈哈！！",
-            "啧啧啧，本來還稍微有點期待，結果就這？失望欸！"
+            "哈哈哈！就知道你不行啦！",
+            "廢物大哥！再練個十年吧！",
+            "這麼爛還想過拷問？",
+            "啧，失望透頂欸～",
+            "叫你不要偷懶吧！",
+            "廢物程度突破天際！",
+            "笑死，這也叫努力？",
+            "啊哈哈哈，果然爛爆！",
+            "就這？小學生都贏你啦！",
+            "啧啧啧，連打字都不會？"
         ];
-
         const superSuccessTaunts = [
-            "等等等等，超過2000字？你是怪物嗎？笨蛋大哥！！！",
-            "本小姐才不會承認你很厲害呢！……（小小聲）但是有點帥啦……",
-            "你這種程度……不不不，才不是讓我心動了呢！可惡！！！",
-            "咕嗚……這種燃燒靈魂的拷問，只有本小姐才值得見證！記得感謝我喔！"
+            "啊啊啊啊！！！！大哥！！！！太燃了！！！",
+            "靈魂燃燒到我都要融化啦啊啊啊！！！",
+            "不愧是本小姐認可的大哥！！！",
+            "啊啊！！！這種燃燒感！！超爽！！！",
+            "大哥你是不是怪物啊！！！好燃！！",
+            "這種程度，本小姐也要認真起來了！！",
+            "哼哼，看來只能加碼拷問你了呢～",
+            "完了完了，本小姐也要愛上你了啦！",
+            "燃！爆！啦！！！！！",
+            "從今天起你是拷問界的傳說！"
         ];
-
         const introTaunts = [
-            "哼！今天也要來拷問自己啊？笨蛋大哥，別又半途而廢喔！",
-            "本小姐小波蒂，今天也在拷問室等著看你出糗呢～",
-            "喂！別發呆了啦，快點拷問起來啊，廢物大哥！！！",
-            "呵呵，本小姐來監視你啦，別想偷懶喔！！"
+            "哼哼，今天又要被本小姐拷問了吧？",
+            "大哥～拷問時間到囉～準備好了嗎？",
+            "快點貼上來！不要磨蹭啦！！",
+            "小波蒂在這裡等著笑你喔～",
+            "本小姐的小皮鞭已經饑渴難耐啦～"
         ];
+        const successImages = ["s1.png", "s2.png", "s3.png"];
+        const failImages = ["f1.png", "f2.png", "f3.png"];
+        const superImages = ["ss1.png", "ss2.png", "ss3.png"];
 
         function randomChoice(arr) {
             return arr[Math.floor(Math.random() * arr.length)];
@@ -79,19 +95,24 @@
             let resultText = `總字數：${totalChars} 字\n純中文數：${chineseChars} 字`;
             let resultHtml = `總字數：${totalChars} 字<br>純中文數：${chineseChars} 字<br>`;
             let taunt = "";
+            let image = "";
 
             if (chineseChars >= target) {
                 if (chineseChars >= 2000) {
                     taunt = randomChoice(superSuccessTaunts);
+                    image = randomChoice(superImages);
                 } else {
                     taunt = randomChoice(successTaunts);
+                    image = randomChoice(successImages);
                 }
             } else {
                 taunt = randomChoice(failTaunts);
+                image = randomChoice(failImages);
             }
 
             document.getElementById("result").innerHTML = resultHtml;
             document.getElementById("taunt").innerHTML = taunt;
+            document.getElementById("image").innerHTML = `<img src="${image}" alt="小波蒂表情">`;
             document.getElementById("copyBtn").style.display = "inline-block";
             document.getElementById("copyBtn").setAttribute("data-text", resultText);
         }
